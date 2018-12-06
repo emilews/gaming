@@ -76,13 +76,11 @@ public class MainApp extends javax.swing.JFrame {
         bMatches_by_Games = new javax.swing.JMenuItem();
         bGame_Leagues = new javax.swing.JMenuItem();
         menuDelete = new javax.swing.JMenu();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        ePlayer = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -296,13 +294,13 @@ public class MainApp extends javax.swing.JFrame {
 
         menuDelete.setText("Borrar");
 
-        jMenuItem11.setText("Player");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        ePlayer.setText("Player");
+        ePlayer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                ePlayerActionPerformed(evt);
             }
         });
-        menuDelete.add(jMenuItem11);
+        menuDelete.add(ePlayer);
 
         jMenuItem12.setText("Team");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
@@ -312,31 +310,29 @@ public class MainApp extends javax.swing.JFrame {
         });
         menuDelete.add(jMenuItem12);
 
-        jMenuItem14.setText("Inventario café");
+        jMenuItem14.setText("Games");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         menuDelete.add(jMenuItem14);
 
-        jMenuItem15.setText("Inventario mercancias");
+        jMenuItem15.setText("Leagues");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         menuDelete.add(jMenuItem15);
 
-        jMenu1.setText("Proveedores");
-
-        jMenuItem16.setText("Por clave");
+        jMenuItem16.setText("Matches");
         jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem16ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem16);
-
-        jMenuItem13.setText("Por nombre");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem13);
-
-        menuDelete.add(jMenu1);
+        menuDelete.add(jMenuItem16);
 
         menuBar.add(menuDelete);
 
@@ -405,10 +401,10 @@ public class MainApp extends javax.swing.JFrame {
         dlg.setVisible(true);
     }//GEN-LAST:event_iPlayerActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        DeleteCoffeeDialog dialog = new DeleteCoffeeDialog(new javax.swing.JFrame(), db);
+    private void ePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ePlayerActionPerformed
+        DeletePlayerDialog dialog = new DeletePlayerDialog(new javax.swing.JFrame(), db);
         dialog.setVisible(true);
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    }//GEN-LAST:event_ePlayerActionPerformed
 
     private void iTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iTeamActionPerformed
         InsertTeamDialog dialogo = new InsertTeamDialog(this, db);
@@ -470,20 +466,10 @@ public class MainApp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_menuBrowseActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        DeleteSuppliersDialog dialog = new DeleteSuppliersDialog(this, db);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
-
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        DeleteCoffeeHousesDialog dialog = new DeleteCoffeeHousesDialog(this, db);
-        dialog.setVisible(true);
+        DeleteTeamDialog d = new DeleteTeamDialog(this, db);
+        d.setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
-
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        DeleteProveedorDialog dialogo = new DeleteProveedorDialog(this, db);
-        dialogo.setVisible(true);
-    }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void bMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMatchesActionPerformed
         final String sql = "SELECT * FROM matches";
@@ -598,6 +584,21 @@ public class MainApp extends javax.swing.JFrame {
         s.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        DeleteGameDialog d = new DeleteGameDialog(this, db);
+        d.setVisible(true);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+       DeleteLeagueDialog d =  new DeleteLeagueDialog(this, db);
+       d.setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        DeleteMatchesDialog d = new DeleteMatchesDialog(this, db);
+        d.setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -649,6 +650,7 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JMenuItem ePlayer;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
@@ -658,11 +660,8 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JMenuItem iMatch;
     private javax.swing.JMenuItem iPlayer;
     private javax.swing.JMenuItem iTeam;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;

@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Emilio%20Wong/Desktop/BaseDeDatos-master/src/pgcaffeniodb/MainApp.java</file>
-            <file>file:/C:/Users/Emilio%20Wong/Desktop/BaseDeDatos-master/src/pgcaffeniodb/TableBrowser.java</file>
+            <file>file:/C:/Users/csipro/Desktop/gaming/BaseDeDatos-master/src/pgcaffeniodb/DeleteGameDialog.java</file>
+            <file>file:/C:/Users/csipro/Desktop/gaming/BaseDeDatos-master/src/pgcaffeniodb/DeleteLeagueDialog.java</file>
+            <file>file:/C:/Users/csipro/Desktop/gaming/BaseDeDatos-master/src/pgcaffeniodb/DeleteTeamDialog.java</file>
+            <file>file:/C:/Users/csipro/Desktop/gaming/BaseDeDatos-master/src/pgcaffeniodb/MainApp.java</file>
+            <file>file:/C:/Users/csipro/Desktop/gaming/BaseDeDatos-master/src/pgcaffeniodb/DeletePlayerDialog.java</file>
+            <file>file:/C:/Users/csipro/Desktop/gaming/BaseDeDatos-master/src/pgcaffeniodb/DeleteMatchesDialog.java</file>
         </group>
     </open-files>
 </project-private>
