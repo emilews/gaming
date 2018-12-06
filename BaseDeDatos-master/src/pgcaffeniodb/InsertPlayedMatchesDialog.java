@@ -23,20 +23,40 @@ public class InsertPlayedMatchesDialog extends javax.swing.JDialog {
      */
     private final HashMap ht;
     private final Database db;
-    private String[] teams = {}; 
-
+    private String[] matches = {}; 
+    private String[] games = {};
+    private String[] teams = {};
+ 
     public InsertPlayedMatchesDialog(java.awt.Frame parent, Database database) {
         super(parent, true);
         this.db = database;
-        String sql = "select team_name from team";
+        String sql = "select game_name from game";
+        String sql1 = "select match_id, match_date from matches";
+        String sql2 = "select team_name from team";
         String a = "";
+        String b = "";
+        String c = "";
         try {
             ResultSet rs = (db.query(sql));
             while(rs.next()){
-                a += rs.getString("team_name");
+                a += rs.getString("game_name");
                 a += ",";
             }
-            teams = a.split(",");
+            ResultSet rs2 = (db.query(sql1));
+            while(rs2.next()){
+                b += rs2.getString("match_id") + "-" + rs2.getString("match_date");
+                b += ",";
+            }
+            ResultSet rs3 = (db.query(sql2));
+            while(rs3.next()){
+                c += rs3.getString("team_name");
+                c += ",";
+            }
+            games = a.split(",");
+            matches = b.split(",");
+            teams = c.split(",");
+            System.out.println(Arrays.toString(games));
+            System.out.println(Arrays.toString(matches));
             System.out.println(Arrays.toString(teams));
         } catch (SQLException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,12 +84,9 @@ public class InsertPlayedMatchesDialog extends javax.swing.JDialog {
         iTeams_Names = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         iTeams_Names1 = new javax.swing.JComboBox<>();
+        iGame = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        iTeams_Names2 = new javax.swing.JComboBox<>();
+        iMatch = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agregar Café");
@@ -95,7 +112,7 @@ public class InsertPlayedMatchesDialog extends javax.swing.JDialog {
         jLabel2.setText("Team 1");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setText("Winner");
+        jLabel7.setText("Game");
 
         iTeams_Names.setModel(new javax.swing.DefaultComboBoxModel<>(teams));
 
@@ -109,31 +126,20 @@ public class InsertPlayedMatchesDialog extends javax.swing.JDialog {
             }
         });
 
+        iGame.setModel(new javax.swing.DefaultComboBoxModel<>(games));
+        iGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iGameActionPerformed(evt);
+            }
+        });
+
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel9.setText("Duration");
+        jLabel9.setText("Match");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        iMatch.setModel(new javax.swing.DefaultComboBoxModel<>(matches));
+        iMatch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Minutes");
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel10.setText("Date");
-
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
-            }
-        });
-
-        iTeams_Names2.setModel(new javax.swing.DefaultComboBoxModel<>(teams));
-        iTeams_Names2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                iTeams_Names2ActionPerformed(evt);
+                iMatchActionPerformed(evt);
             }
         });
 
@@ -141,35 +147,32 @@ public class InsertPlayedMatchesDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(okButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cancelButton)
-                .addGap(80, 80, 80))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9))
                         .addGap(78, 78, 78)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(iTeams_Names2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(iTeams_Names, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(iTeams_Names1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField1))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel1))
-                                .addComponent(jFormattedTextField1)))))
-                .addGap(199, 377, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(iGame, 0, 69, Short.MAX_VALUE)
+                                    .addComponent(iTeams_Names, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(iTeams_Names1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(196, 196, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(iMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(okButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cancelButton)
+                .addGap(80, 80, 80))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,24 +188,19 @@ public class InsertPlayedMatchesDialog extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(iTeams_Names1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(iMatch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(iTeams_Names2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73)
+                    .addComponent(iGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(110, 110, 110)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okButton)
                     .addComponent(cancelButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -212,31 +210,40 @@ public class InsertPlayedMatchesDialog extends javax.swing.JDialog {
         String oDetails = " ";
         String team1_name = iTeams_Names.getSelectedItem().toString();
         String team2_name = iTeams_Names1.getSelectedItem().toString();
+        String game = iGame.getSelectedItem().toString();
+        String match = iMatch.getSelectedItem().toString().split("-")[0];
         String team1_id = "";
         String team2_id = "";
+        String game_code = "";
         try {
             ResultSet ass1 = db.query("select * from team where team_name = \'" +
                     team1_name + "\'");
             ResultSet ass2 = db.query("select * from team where team_name = \'" +
                     team2_name + "\'");
+            ResultSet ass3 = db.query("select * from game where game_name = \'" +
+                    game + "\'");
             ass1.next();
             ass2.next();
+            ass3.next();
             team1_id = ass1.getString("team_id");
             team2_id = ass2.getString("team_id");
+            game_code = ass3.getString("game_code");
         } catch (SQLException ex) {
             Logger.getLogger(InsertPlayedMatchesDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
         
 
         StringBuilder sql
-                = new StringBuilder("INSERT INTO played_matches (team_1_id, team_2_id "
+                = new StringBuilder("INSERT INTO played_matches (team_1_id, team_2_id, "
                         + "match_id, game_code) "
                         + "VALUES (\'");
         sql.append(team1_id);
         sql.append("\',\'");
         sql.append(team2_id);
         sql.append("\',\'");
-        sql.append(oDetails);
+        sql.append(match);
+        sql.append("\',\'");
+        sql.append(game_code);
         sql.append("\')");
         System.out.println( sql.toString() );
 
@@ -257,33 +264,26 @@ public class InsertPlayedMatchesDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_iTeams_Names1ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void iGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iGameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_iGameActionPerformed
 
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+    private void iMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iMatchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
-
-    private void iTeams_Names2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iTeams_Names2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_iTeams_Names2ActionPerformed
+    }//GEN-LAST:event_iMatchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JComboBox<String> iGame;
+    private javax.swing.JComboBox<String> iMatch;
     private javax.swing.JComboBox<String> iTeams_Names;
     private javax.swing.JComboBox<String> iTeams_Names1;
-    private javax.swing.JComboBox<String> iTeams_Names2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 }

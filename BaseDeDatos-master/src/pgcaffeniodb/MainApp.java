@@ -21,7 +21,7 @@ public class MainApp extends javax.swing.JFrame {
     //private final String USER = "usr210215739";
     //private final String PASS = "pw210215739";
     private final String USER = "postgres";
-    private final String PASS = "popo1212";
+    private final String PASS = "tenemosun3312";
     final private Database db;
 
     /**
@@ -188,9 +188,19 @@ public class MainApp extends javax.swing.JFrame {
         menuInsertar.add(jMenuItem1);
 
         jMenuItem2.setText("Played Matches");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         menuInsertar.add(jMenuItem2);
 
         jMenuItem3.setText("Matches by Game");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         menuInsertar.add(jMenuItem3);
 
         jMenuItem4.setText("Game Leagues");
@@ -379,7 +389,7 @@ public class MainApp extends javax.swing.JFrame {
 
             JDBCTableAdpater modelo = new JDBCTableAdpater(rs, labels);
 
-            modelo.addTableModelListener(new CoffeesTableListener(db));
+            modelo.addTableModelListener(new PlayerTableListener(db));
 
             TableBrowser browser = new TableBrowser("Players", modelo);
             browser.setVisible(true);
@@ -408,7 +418,7 @@ public class MainApp extends javax.swing.JFrame {
     private void bTeamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTeamsActionPerformed
         final String sql = "SELECT * FROM team ORDER BY team_id";
         final String labels[] = {"ID", "Name", "Date created",
-            "Date disbanded", "Other details", "Date from", "Game played"};
+            "Date disbanded", "Other details", "Game played"};
         try {
             ResultSet rs = db.query(sql);
 
@@ -554,7 +564,8 @@ public class MainApp extends javax.swing.JFrame {
         }        }//GEN-LAST:event_bGame_LeaguesActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        InsertRankingDialog s = new InsertRankingDialog(this, db);
+        s.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void iGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iGameActionPerformed
@@ -576,6 +587,16 @@ public class MainApp extends javax.swing.JFrame {
         InsertGameLeaguesDialog d = new InsertGameLeaguesDialog(this, db);
         d.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        InsertPlayedMatchesDialog d = new InsertPlayedMatchesDialog(this, db);
+        d.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        InsertMatchByGameDialog s = new InsertMatchByGameDialog(this, db);
+        s.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
